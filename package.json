@@ -33,7 +33,7 @@
     "expect.js": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3"
   },
-  "keywords": [],
+  "keywords": ["http","https","request","ajax","redirect","gzip","download","upload","post","get"],
   "dependencies": {
     "lodash": "~2.4.1",
     "concat-stream": "~1.2.1",
@@ -48,7 +48,7 @@
             "opera/16", "opera/17", "opera/next",
             "safari/4","safari/5.0.5","safari/5.1"
         ],
-        "harness" : "mocha",
+        "harness" : "mocha-bdd",
         "files": "test/*.js"
     }
 }

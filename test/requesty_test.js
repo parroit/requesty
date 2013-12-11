@@ -1,5 +1,3 @@
-'use strict';
-
 var expect = require("expect.js");
 var requesty = require("../lib/requesty");
 

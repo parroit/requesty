@@ -69,6 +69,33 @@ describe("requesty", function () {
 
     });
 
+    describe("GET gzipped data", function () {
+        var response;
+        before(function (done) {
+            var req = requesty(
+                'http://httpbin.org/gzip'
+            );
+
+            req.then(function (res) {
+                response = res;
+                done();
+
+            }).then(null, function (err) {
+                    console.log("%s\n%s", err.message, err.stack);
+                });
+
+
+        });
+
+        it ("return unzipped json data",function(){
+            expect(response.data).to.be.an('object');
+        });
+
+        it ("parse headers",function(){
+
+            expect(response.data.gzipped).to.be.equal(true);
+        });
+    });
 
 
     describe("GET http html", function () {
@@ -104,7 +131,7 @@ describe("requesty", function () {
         var error;
         before(function (done) {
             var req = requesty(
-                'https://github.com/olalalalal',
+                'https://httpbin.org/status/404',
                 "GET"
             );
 
@@ -130,6 +157,40 @@ describe("requesty", function () {
 
         it ("error contains status code",function(){
             expect(error.statusCode).to.be.equal(404);
+        });
+
+    });
+
+    describe("GET https 500", function () {
+        var error;
+        before(function (done) {
+            var req = requesty(
+                'https://httpbin.org/status/500',
+                "GET"
+            );
+
+            req.then(function (res) {
+                done();
+
+            }).then(null, function (err) {
+                    error = err;
+
+                    done();
+                });
+
+
+        });
+
+        it ("reject with error",function(){
+            expect(error).to.be.an('object');
+        });
+
+        it ("error message contains status code and description",function(){
+            expect(error.message).to.be.equal('500: Internal Server Error');
+        });
+
+        it ("error contains status code",function(){
+            expect(error.statusCode).to.be.equal(500);
         });
 
     });

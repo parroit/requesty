@@ -124,32 +124,23 @@ describe("requesty", function () {
     });
 
 
-    describe("GET http html", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'http://httpbin.org/'
-            );
+    describe("method defaults to GET", function () {
+
+
+        it ("return html as string",function(done){
+            var req = requesty('http://httpbin.org/html');
 
             req.then(function (res) {
-                response = res;
+
+                expect(res.data.indexOf("Herman Melville - Moby-Dick")).to.be.greaterThan(10);
                 done();
 
             }).then(null, function (err) {
                 console.log("%s\n%s", err.message, err.stack);
             });
-
-
         });
 
-        it ("return html as string",function(){
-            expect(response.data).to.be.an('string');
-        });
 
-        it ("parse headers",function(){
-
-            expect(response.data.length).to.be.greaterThan(7600);
-        });
     });
 
 

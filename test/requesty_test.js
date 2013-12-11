@@ -98,6 +98,32 @@ describe("requesty", function () {
     });
 
 
+    describe("follow redirects", function () {
+        var response;
+        before(function (done) {
+            var req = requesty(
+                'http://httpbin.org/redirect/1'
+            );
+
+            req.then(function (res) {
+                response = res;
+                done();
+
+            }).then(null, function (err) {
+                    console.log("%s\n%s", err.message, err.stack);
+                });
+
+
+        });
+
+        it ("return json data from redirected page",function(){
+            expect(response.data).to.be.an('object');
+
+            expect(response.data.url).to.be.equal("http://httpbin.org/get");
+        });
+    });
+
+
     describe("GET http html", function () {
         var response;
         before(function (done) {

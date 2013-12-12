@@ -233,7 +233,7 @@ describe("requesty", function () {
         });
         it ("fullfill response",function(){
 
-            expect(response).to.be.equal('string');
+            expect(response.headers["content-type"]).to.be.equal('text/html; charset=utf-8');
         });
 
 

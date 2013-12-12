@@ -48,8 +48,7 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "concat-stream": "~1.2.1",
-    "promise": "~3.2.0",
-    "http-status-codes-json": "~2013.2.26"
+    "promise": "~3.2.0"
   },
   "testling": {
     "browsers": [

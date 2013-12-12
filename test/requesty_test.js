@@ -210,5 +210,34 @@ describe("requesty", function () {
 
     });
 
+    describe("succeed with status 2**", function () {
+        var error;
+        var response;
+        before(function (done) {
+            var req = requesty('https://httpbin.org/status/201');
 
+            req.then(function (res) {
+                response = res;
+                done();
+
+            }).then(null, function (err) {
+                    error = err;
+
+                    done();
+                });
+
+
+        });
+        it ("error is not raised",function(){
+            expect(error).to.be.equal(undefined);
+        });
+        it ("fullfill response",function(){
+
+            expect(response).to.be.equal('string');
+        });
+
+
+
+
+    });
 });

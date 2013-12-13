@@ -66,6 +66,33 @@ describe("requesty", function () {
 
 
     });
+    describe("POST http unicode", function () {
+        var response;
+        before(function (done) {
+            var req = requesty(
+                'http://httpbin.org/post',
+                "POST",
+                {},
+                "Just a €"
+            );
+
+            req.then(function (res) {
+                response = res;
+                done();
+
+            }).then(null, function (err) {
+                    console.log("%s\n%s", err.message, err.stack);
+                });
+
+
+        });
+
+        it ("post request body",function(){
+            expect(response.data.data).to.be.equal("Just a €");
+        });
+
+
+    });
 
     describe("GET gzipped data", function () {
         var response;

@@ -1,7 +1,7 @@
 {
   "name": "requesty",
   "description": "http and https requests in node and in browser",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "https://github.com/parroit/requesty",
   "author": {
     "name": "parroit",

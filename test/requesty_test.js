@@ -3,6 +3,8 @@ var requesty = require("../lib/requesty");
 
 
 describe("requesty", function () {
+    this.timeout(10000);
+
     it("is defined", function () {
         expect(requesty).to.be.an('function');
     });
@@ -80,9 +82,7 @@ describe("requesty", function () {
                 response = res;
                 done();
 
-            }).then(null, function (err) {
-                    console.log("%s\n%s", err.message, err.stack);
-                });
+            }).then(null, done);
 
 
         });

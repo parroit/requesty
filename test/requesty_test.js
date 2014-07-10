@@ -25,14 +25,15 @@ describe('requesty', function() {
 
 
         it('return html as string', function(done) {
-            var req = requesty('http://httpbin.org/html');
+            var req = requesty.new().get('http://httpbin.org/html');
 
-            req.then(function(res) {
+            req.send()
+                .then(function(res) {
 
-                res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
-                done();
+                    res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
+                    done();
 
-            }).then(null, done);
+                }).then(null, done);
         });
 
 

@@ -1,270 +1,216 @@
-var expect = require("expect.js");
-var requesty = require("../lib/requesty");
+/*
+ * requesty
+ * https://github.com/parroit/requesty
+ *
+ * Copyright (c) 2014
+ * Licensed under the MIT license.
+ */
 
+'use strict';
 
-describe("requesty", function () {
+var chai = require('chai');
+chai.expect();
+var should = chai.should();
+
+var requesty = require('../lib/requesty');
+
+describe('requesty', function() {
     this.timeout(10000);
 
-    it("is defined", function () {
-        expect(requesty).to.be.an('function');
+    it('is defined', function() {
+        requesty.should.be.an('function');
     });
 
-    describe("GET https json", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'https://api.github.com/users/octocat/orgs',
-                "GET",
-                {
-                    'User-Agent': 'requesty'
-                }
-            );
-
-            req.then(function (res) {
-                response = res;
-                done();
-
-            }).then(null, function (err) {
-                console.log("%s\n%s", err.message, err.stack);
-            });
+    describe('method defaults to GET', function() {
 
 
-        });
+        it('return html as string', function(done) {
+            var req = requesty('http://httpbin.org/html');
 
-        it ("parse json",function(){
-            expect(response.data).to.be.an('array');
-        });
+            req.then(function(res) {
 
-        it ("parse headers",function(){
-
-            expect(response.headers["x-ratelimit-limit"]).to.be.equal('60');
-        });
-    });
-
-    describe("POST http json", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'http://httpbin.org/post',
-                "POST",
-                {},
-                "Just a test"
-            );
-
-            req.then(function (res) {
-                response = res;
-                done();
-
-            }).then(null, function (err) {
-                    console.log("%s\n%s", err.message, err.stack);
-                });
-
-
-        });
-
-        it ("post request body",function(){
-            expect(response.data.data).to.be.equal("Just a test");
-        });
-
-
-    });
-    describe("POST http unicode", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'http://httpbin.org/post',
-                "POST",
-                {},
-                "Just a €"
-            );
-
-            req.then(function (res) {
-                response = res;
+                res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
                 done();
 
             }).then(null, done);
-
-
-        });
-
-        it ("post request body",function(){
-            expect(response.data.data).to.be.equal("Just a €");
         });
 
 
     });
 
-    describe("GET gzipped data", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'http://httpbin.org/gzip'
-            );
 
-            req.then(function (res) {
-                response = res;
-                done();
+    describe('new', function() {
+        var req = requesty.new({
+            its: 'me'
+        });
+        var reqDefault = requesty.new();
 
-            }).then(null, function (err) {
-                    console.log("%s\n%s", err.message, err.stack);
+        it('return new Request object', function() {
+            reqDefault.constructor.name.should.be.equal('Request');
+        });
+
+        it('accept options object', function() {
+            req.options.its.should.be.equal('me');
+        });
+
+        it('options created by default', function() {
+            reqDefault.options.should.be.a('object');
+        });
+    });
+
+    describe('method', function() {
+        var req = requesty.new();
+
+        describe('auth', function() {
+            var authResult = req.auth('usern@me', 'p@ssword');
+            var withOptions = requesty.new().auth({
+                user: 'usern@me',
+                password: 'p@ssword'
+            });
+
+            it('return req instance for fluid api chain', function() {
+                authResult.should.be.equal(req);
+            });
+
+            it('save user in options', function() {
+                authResult.options.auth.user.should.be.equal('usern@me');
+            });
+
+            it('save password in options', function() {
+                authResult.options.auth.password.should.be.equal('p@ssword');
+            });
+
+            it('has a default type of basic', function() {
+                authResult.options.auth.type.should.be.equal('basic');
+            });
+
+            describe('with options', function() {
+
+                it('save user in options', function() {
+                    withOptions.options.auth.user.should.be.equal('usern@me');
                 });
 
-
-        });
-
-        it ("return unzipped json data",function(){
-            expect(response.data).to.be.an('object');
-        });
-
-        it ("parse headers",function(){
-
-            expect(response.data.gzipped).to.be.equal(true);
-        });
-    });
-
-
-    describe("follow redirects", function () {
-        var response;
-        before(function (done) {
-            var req = requesty(
-                'http://httpbin.org/redirect/1'
-            );
-
-            req.then(function (res) {
-                response = res;
-                done();
-
-            }).then(null, function (err) {
-                    console.log("%s\n%s", err.message, err.stack);
+                it('save password in options', function() {
+                    withOptions.options.auth.password.should.be.equal('p@ssword');
                 });
 
+                it('has a default type of basic', function() {
+                    withOptions.options.auth.type.should.be.equal('basic');
+                });
+            });
 
         });
 
-        it ("return json data from redirected page",function(){
-            expect(response.data).to.be.an('object');
+        describe('get', function() {
+            var getReturn = req.get();
 
-            expect(response.data.url).to.be.equal("http://httpbin.org/get");
-        });
-    });
+            it('return req instance for fluid api chain', function() {
+                getReturn.should.be.equal(req);
+            });
 
-
-    describe("method defaults to GET", function () {
-
-
-        it ("return html as string",function(done){
-            var req = requesty('http://httpbin.org/html');
-
-            req.then(function (res) {
-
-                expect(res.data.indexOf("Herman Melville - Moby-Dick")).to.be.greaterThan(10);
-                done();
-
-            }).then(null, function (err) {
-                console.log("%s\n%s", err.message, err.stack);
+            it('same method to options', function() {
+                getReturn.options.method.should.be.equal('GET');
             });
         });
 
-
-    });
-
-
-    describe("GET https 404", function () {
-        var error;
-        before(function (done) {
-            var req = requesty(
-                'https://httpbin.org/status/404',
-                "GET"
-            );
-
-            req.then(function (res) {
-                done();
-
-            }).then(null, function (err) {
-                error = err;
-
-                done();
+        describe('using', function() {
+            var usingResult = req.using('http://localhost');
+            var withOptions = requesty.new().using({
+                scheme: 'https:',
+                hostname: 'www.parro.it',
+                port: 1000,
+                path: '/test'
             });
 
+            it('return req instance for fluid api chain', function() {
+                usingResult.should.be.equal(req);
+            });
 
-        });
+            it('save scheme in options', function() {
+                usingResult.options.scheme.should.be.equal('http:');
+            });
 
-        it ("reject with error",function(){
-            expect(error).to.be.an('object');
-        });
+            it('save hostname in options', function() {
+                usingResult.options.hostname.should.be.equal('localhost');
+            });
 
-        it ("error message contains status code and description",function(){
-            expect(error.message).to.be.equal('404: Not Found');
-        });
+            it('has a default port of 80 for http', function() {
+                usingResult.options.port.should.be.equal(80);
+            });
 
-        it ("error contains status code",function(){
-            expect(error.statusCode).to.be.equal(404);
-        });
+            it('has a default path of /', function() {
+                usingResult.options.path.should.be.equal('/');
+            });
 
-    });
+            describe('with options', function() {
 
-    describe("GET https 500", function () {
-        var error;
-        before(function (done) {
-            var req = requesty(
-                'https://httpbin.org/status/500',
-                "GET"
-            );
-
-            req.then(function (res) {
-                done();
-
-            }).then(null, function (err) {
-                    error = err;
-
-                    done();
+                it('save scheme in options', function() {
+                    withOptions.options.scheme.should.be.equal('https:');
                 });
 
-
-        });
-
-        it ("reject with error",function(){
-            expect(error).to.be.an('object');
-        });
-
-        it ("error message contains status code and description",function(){
-            expect(error.message).to.be.equal('500: Internal Server Error');
-        });
-
-        it ("error contains status code",function(){
-            expect(error.statusCode).to.be.equal(500);
-        });
-
-    });
-
-    describe("succeed with status 2**", function () {
-        var error;
-        var response;
-        before(function (done) {
-            var req = requesty('https://httpbin.org/status/201');
-
-            req.then(function (res) {
-                response = res;
-                done();
-
-            }).then(null, function (err) {
-                    error = err;
-
-                    done();
+                it('save hostname in options', function() {
+                    withOptions.options.hostname.should.be.equal('www.parro.it');
                 });
 
+                it('save port of in options', function() {
+                    withOptions.options.port.should.be.equal(1000);
+                });
+
+                it('save path in options', function() {
+                    withOptions.options.path.should.be.equal('/test');
+                });
+            });
 
         });
-        it ("error is not raised",function(){
-            expect(error).to.be.equal(undefined);
+
+        describe('proxy', function() {
+            var proxyResult = req.proxy('proxy.host-na.me', 'usern@me', 'p@ssword');
+            var withOptions = requesty.new().proxy({
+                hostname: 'proxy.host-na.me',
+                user: 'usern@me',
+                password: 'p@ssword'
+            });
+
+            it('return req instance for fluid api chain', function() {
+                proxyResult.should.be.equal(req);
+            });
+
+            it('save user in options', function() {
+                proxyResult.options.proxy.user.should.be.equal('usern@me');
+            });
+
+            it('save password in options', function() {
+                proxyResult.options.proxy.password.should.be.equal('p@ssword');
+            });
+
+            it('save hostname in options', function() {
+                proxyResult.options.proxy.hostname.should.be.equal('proxy.host-na.me');
+            });
+
+            it('has a default type of basic', function() {
+                proxyResult.options.proxy.type.should.be.equal('basic');
+            });
+
+            describe('with options', function() {
+
+                it('save user in options', function() {
+                    withOptions.options.proxy.user.should.be.equal('usern@me');
+                });
+
+                it('save password in options', function() {
+                    withOptions.options.proxy.password.should.be.equal('p@ssword');
+                });
+
+                it('save hostname in options', function() {
+                    withOptions.options.proxy.hostname.should.be.equal('proxy.host-na.me');
+                });
+
+                it('has a default type of basic', function() {
+                    withOptions.options.proxy.type.should.be.equal('basic');
+                });
+            });
+
         });
-        it ("fullfill response",function(){
-
-            expect(response.headers["content-type"]).to.be.equal('text/html; charset=utf-8');
-        });
-
-
-
-
     });
+
 });

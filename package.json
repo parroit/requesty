@@ -1,7 +1,7 @@
 {
   "name": "requesty",
   "description": "http and https requests in node and in browser",
-  "version": "0.7.0",
+  "version": "0.6.0",
   "homepage": "https://github.com/parroit/requesty",
   "author": {
     "name": "parroit",
@@ -28,10 +28,11 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-mocha-test": "~0.7.0",
-    "expect.js": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "gulp": "~3.8.5",
+    "mocha": "~1.10.0",
+    "chai": "~1.8.0",
+    "gulp-mocha": "~0.4.1"
+    
   },
   "keywords": [
     "http",
@@ -46,7 +47,6 @@
     "get"
   ],
   "dependencies": {
-    "lodash": "~2.4.1",
     "concat-stream": "~1.2.1",
     "promise": "~3.2.0"
   },

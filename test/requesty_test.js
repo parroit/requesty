@@ -21,10 +21,10 @@ describe('requesty', function() {
         requesty.should.be.an('function');
     });
 
-    describe('method defaults to GET', function() {
+    describe('return', function() {
 
 
-        it('return html as string', function(done) {
+        it('promises', function(done) {
             var req = requesty.new().get('http://httpbin.org/html');
 
             req.send()

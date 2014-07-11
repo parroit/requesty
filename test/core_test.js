@@ -162,7 +162,7 @@ describe('requesty core request', function () {
             response.data.gzipped.should.be.equal(true);
         });
     });
-/*
+
 
     describe.only('follow redirects', function () {
         var response;
@@ -186,7 +186,6 @@ describe('requesty core request', function () {
             response.data.url.should.be.equal('http://httpbin.org/get');
         });
     });
-*/
 
     describe('GET http  404', function () {
         var error;

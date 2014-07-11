@@ -136,7 +136,7 @@ describe('requesty core request', function () {
 
 
     });
-/*
+
     describe('GET gzipped data', function () {
         var response;
         before(function (done) {
@@ -162,9 +162,9 @@ describe('requesty core request', function () {
             response.data.gzipped.should.be.equal(true);
         });
     });
+/*
 
-
-    describe('follow redirects', function () {
+    describe.only('follow redirects', function () {
         var response;
         before(function (done) {
             var req = requesty(

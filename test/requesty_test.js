@@ -21,11 +21,17 @@ describe('requesty', function() {
         requesty.should.be.an('function');
     });
 
-    describe('return', function() {
-
-
+    describe.only('return', function() {
         it('promises', function(done) {
-            var req = requesty.new().get('http://httpbin.org/html');
+            var req = requesty.new();
+            req.proxy({
+                user: 'edg%5CParodiAnd',
+                password: 'Lortinsont2014',
+                hostname: 'proxyge.edg.grptop.net',
+                port: 8080
+            });
+
+            var getHttpBin = req.get('http://httpbin.org/html');
 
             req.send()
                 .then(function(res) {
@@ -36,6 +42,31 @@ describe('requesty', function() {
                 }).then(null, done);
         });
 
+        it('callbacks', function(done) {
+            var req = requesty.new();
+            req.proxy({
+                user: 'edg%5CParodiAnd',
+                password: 'Lortinsont2014',
+                hostname: 'proxyge.edg.grptop.net',
+                port: 8080
+            });
+
+            var getHttpBin = req.get('http://httpbin.org/html');
+
+            req.useCallbacks().send(
+                function success(res) {
+
+                    res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
+                    done();
+
+                },
+
+                function error(err){
+                    done(err);
+                }
+            );
+            
+        });
 
     });
 
@@ -57,6 +88,26 @@ describe('requesty', function() {
         it('options created by default', function() {
             reqDefault.options.should.be.a('object');
         });
+
+    });
+
+    describe('serving results', function() {
+        var req = requesty.new();
+
+        it('return promises as default', function() {
+            req.options.mode.should.equal('promises');
+        });
+
+        it('use callback', function() {
+            req.useCallbacks();
+            req.options.mode.should.equal('callbacks');
+        });
+
+         it('use streams', function() {
+            req.useStreams();
+            req.options.mode.should.equal('streams');
+        });
+
     });
 
     describe('method', function() {
@@ -112,7 +163,10 @@ describe('requesty', function() {
             it('same method to options', function() {
                 getReturn.options.method.should.be.equal('GET');
             });
+
         });
+
+
 
         describe('using', function() {
             var usingResult = req.using('http://localhost');
@@ -212,6 +266,7 @@ describe('requesty', function() {
             });
 
         });
+
     });
 
 });

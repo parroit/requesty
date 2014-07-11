@@ -11,7 +11,7 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 
-var test = './test/**/requesty_test.js';
+var test = './test/**/*.js';
 var lib = './lib/**/*.js';
 
 gulp.task('test', function() {

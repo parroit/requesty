@@ -21,21 +21,16 @@ describe('requesty', function() {
         requesty.should.be.an('function');
     });
 
-    describe.only('return', function() {
+    describe('return', function() {
         it('promises', function(done) {
             var req = requesty.new();
-            req.proxy({
-                user: 'edg%5CParodiAnd',
-                password: 'Lortinsont2014',
-                hostname: 'proxyge.edg.grptop.net',
-                port: 8080
-            });
+           
 
             var getHttpBin = req.get('http://httpbin.org/html');
 
             req.send()
                 .then(function(res) {
-
+                    
                     res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
                     done();
 
@@ -44,12 +39,7 @@ describe('requesty', function() {
 
         it('callbacks', function(done) {
             var req = requesty.new();
-            req.proxy({
-                user: 'edg%5CParodiAnd',
-                password: 'Lortinsont2014',
-                hostname: 'proxyge.edg.grptop.net',
-                port: 8080
-            });
+           
 
             var getHttpBin = req.get('http://httpbin.org/html');
 

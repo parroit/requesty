@@ -164,7 +164,7 @@ describe('requesty core request', function () {
     });
 
 
-    describe.only('follow redirects', function () {
+    describe('follow redirects', function () {
         var response;
         before(function (done) {
             var req = requesty(

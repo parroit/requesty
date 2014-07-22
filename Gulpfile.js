@@ -44,6 +44,7 @@ gulp.task('build', function() {
             insertGlobals: false
         })
         .pipe(source('requesty.min.js'))
+        .pipe($.streamify($.uglify()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -55,6 +56,7 @@ gulp.task('build-test', function() {
             insertGlobals: false
         })
         .pipe(source('requesty-test.js'))
+
         .pipe(gulp.dest('dist'));
 });
 

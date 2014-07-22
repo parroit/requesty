@@ -13,10 +13,10 @@ chai.expect();
 var should = chai.should();
 
 var requesty = require('../lib/requesty');
-
-
+var httpbin = process.env.httpbin || 'http://httpbin.org';
+console.log(httpbin+ '/get')
 describe('requesty core request', function () {
-    this.timeout(10000);
+    this.timeout(100000);
 
     it('is defined', function () {
         requesty.should.be.an('function');
@@ -27,7 +27,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/get',
+                httpbin+ '/get',
                 'GET',
                 {
                     'User-Agent': 'requesty'
@@ -38,7 +38,7 @@ describe('requesty core request', function () {
                 response = res;
                 done();
 
-            }).then(null, done);
+            }).catch(done);
 
 
         });
@@ -58,7 +58,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/get',
+                httpbin+ '/get',
                 'GET',
                 {
                     'User-Agent': 'requesty'
@@ -90,7 +90,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/post',
+                httpbin+ '/post',
                 'POST',
                 {},
                 'Just a test'
@@ -115,7 +115,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/post',
+                httpbin+ '/post',
                 'POST',
                 {},
                 'Just a €'
@@ -141,7 +141,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/gzip'
+                httpbin+ '/gzip'
             );
 
             req.then(function (res) {
@@ -168,7 +168,7 @@ describe('requesty core request', function () {
         var response;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/redirect/1'
+                httpbin+ '/redirect/1'
             );
 
             req.then(function (res) {
@@ -183,7 +183,7 @@ describe('requesty core request', function () {
         it ('return json data from redirected page',function(){
             response.data.should.be.an('object');
 
-            response.data.url.should.be.equal('http://httpbin.org/get');
+            response.data.url.should.be.equal(httpbin+ '/get');
         });
     });
 
@@ -191,7 +191,7 @@ describe('requesty core request', function () {
         var error;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/status/404',
+                httpbin+ '/status/404',
                 'GET'
             );
 
@@ -224,7 +224,7 @@ describe('requesty core request', function () {
         var error;
         before(function (done) {
             var req = requesty(
-                'http://httpbin.org/status/500',
+                httpbin+ '/status/500',
                 'GET'
             );
 
@@ -258,7 +258,7 @@ describe('requesty core request', function () {
         var error;
         var response;
         before(function (done) {
-            var req = requesty('http://httpbin.org/status/201');
+            var req = requesty(httpbin+ '/status/201');
 
             req.then(function (res) {
                 response = res;

@@ -13,6 +13,7 @@ chai.expect();
 var should = chai.should();
 var concat = require('concat-stream');
 var requesty = require('../lib/requesty');
+var httpbin = process.env.httpbin || 'http://httpbin.org';
 
 describe('requesty', function() {
     this.timeout(10000);
@@ -26,7 +27,7 @@ describe('requesty', function() {
             var req = requesty.new();
            
 
-            var getHttpBin = req.get('http://httpbin.org/html');
+            var getHttpBin = req.get(httpbin+'/html');
 
             req.send()
                 .then(function(res) {
@@ -42,7 +43,7 @@ describe('requesty', function() {
             var req = requesty.new();
            
 
-            var getHttpBin = req.get('http://httpbin.org/html');
+            var getHttpBin = req.get(httpbin+'/html');
 
             req.useCallbacks().send(
                 function success(err,res) {
@@ -61,7 +62,7 @@ describe('requesty', function() {
             var req = requesty.new();
            
 
-            req.get('http://httpbin.org/html');
+            req.get(httpbin+'/html');
 
             var res = req.useStreams().send();
             res.on('error',done);

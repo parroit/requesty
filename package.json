@@ -29,9 +29,12 @@
   },
   "devDependencies": {
     "gulp": "~3.8.5",
-    "mocha": "~1.10.0",
+    "gulp-util": "^3.0.0",
     "chai": "~1.8.0",
-    "gulp-mocha": "~0.4.1"
+    "gulp-mocha": "~0.4.1",
+    "gulp-load-plugins": "^0.5.3",
+    "vinyl-source-stream": "^0.1.1",
+    "browserify": "^4.2.1"
   },
   "keywords": [
     "http",
@@ -47,8 +50,9 @@
   ],
   "dependencies": {
     "concat-stream": "~1.2.1",
-    "promise": "~3.2.0",
-    "through2": "~0.5.1"
+    "through2": "~0.5.1",
+    "chilli": "^0.1.0",
+    "bluebird": "^2.2.2"
   },
   "testling": {
     "browsers": [

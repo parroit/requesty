@@ -11,7 +11,7 @@
 var chai = require('chai');
 chai.expect();
 var should = chai.should();
-
+var concat = require('concat-stream');
 var requesty = require('../lib/requesty');
 
 describe('requesty', function() {
@@ -22,7 +22,7 @@ describe('requesty', function() {
     });
 
     describe('return', function() {
-        it('promises', function(done) {
+       it('promises', function(done) {
             var req = requesty.new();
            
 
@@ -37,6 +37,7 @@ describe('requesty', function() {
                 }).then(null, done);
         });
 
+
         it('callbacks', function(done) {
             var req = requesty.new();
            
@@ -44,17 +45,33 @@ describe('requesty', function() {
             var getHttpBin = req.get('http://httpbin.org/html');
 
             req.useCallbacks().send(
-                function success(res) {
-
+                function success(err,res) {
+                    if (err) {
+                        return done(err);
+                    }
                     res.data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
                     done();
 
-                },
-
-                function error(err){
-                    done(err);
                 }
             );
+            
+        });
+
+        it('streams', function(done) {
+            var req = requesty.new();
+           
+
+            req.get('http://httpbin.org/html');
+
+            var res = req.useStreams().send();
+            res.on('error',done);
+            res.setEncoding('utf8');
+            res.pipe(concat(function(data){
+                data.indexOf('Herman Melville - Moby-Dick').should.be.greaterThan(10);
+                done();
+
+            }));
+            
             
         });
 

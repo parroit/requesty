@@ -1,8 +1,6 @@
 # requesty
 [![Build Status](https://secure.travis-ci.org/parroit/requesty.png?branch=master)](http://travis-ci.org/parroit/requesty)  [![Npm module](https://badge.fury.io/js/requesty.png)](https://npmjs.org/package/requesty) [![Code Climate](https://codeclimate.com/github/parroit/requesty.png)](https://codeclimate.com/github/parroit/requesty)
 
-[![browser support](https://ci.testling.com/parroit/requesty.png)](http://ci.testling.com/parroit/requesty)
-
 promise based http and https requests, in node and in browser
 
 ## Getting Started
@@ -22,17 +20,10 @@ requesty('http://httpbin.org/html').then(function (res) {
 });
 ```
 
-## Documentation
-_(Coming soon)_
+## Other stuff
 
-## Examples
-see test folder for more advanced usage
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style.
-Add unit tests for any new or changed functionality.
-
+* documentation - maybe I will add documentation if you ask it. open an issue for this.
+* support - open an issue [here](https://github.com/parroit/requesty/issues).
 
 ## License
-Copyright (c) 2013 parroit  
-Licensed under the MIT license.
+[MIT](http://opensource.org/licenses/MIT) © 2014, Andrea Parodi

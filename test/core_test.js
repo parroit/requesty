@@ -198,9 +198,8 @@ describe('requesty core request', function () {
             req.then(function () {
                 done();
 
-            }).then(null, function (err) {
+            }).catch(function (err) {
                 error = err;
-
                 done();
             });
 
@@ -232,7 +231,7 @@ describe('requesty core request', function () {
             req.then(function () {
                 done();
 
-            }).then(null, function (err) {
+            }).catch(function (err) {
                     error = err;
 
                     done();

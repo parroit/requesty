@@ -14,7 +14,7 @@ var should = chai.should();
 
 var requesty = require('../lib/requesty');
 var httpbin = process.env.httpbin || 'http://httpbin.org';
-console.log(httpbin+ '/get')
+
 describe('requesty core request', function () {
     this.timeout(100000);
 
@@ -50,7 +50,7 @@ describe('requesty core request', function () {
 
         it ('parse headers',function(){
             //console.dir(response.headers)
-            response.headers.server.should.be.equal('gunicorn/18.0');
+            response.headers.server.substring(0,8).should.be.equal('gunicorn');
         });
     });
 
@@ -69,9 +69,7 @@ describe('requesty core request', function () {
                 response = res;
                 done();
 
-            }).then(null, function (err) {
-                console.log('%s\n%s', err.message, err.stack);
-            });
+            }).catch(done);
 
 
         });
@@ -82,7 +80,7 @@ describe('requesty core request', function () {
         });
 
         it ('parse headers',function(){
-            response.headers.server.should.be.equal('gunicorn/18.0');
+            response.headers.server.substring(0,8).should.be.equal('gunicorn');
         });
     });
 

@@ -13,12 +13,13 @@ chai.expect();
 var should = chai.should();
 
 var requesty = require('../lib/requesty');
+var httpbin = process.env.httpbin || 'http://httpbin.org';
 
 function newApi() {
     var req = requesty.new().usePromises();
     req
         .get()
-        .using('http://httpbin.org')
+        .using(httpbin)
         .headers({
             'User-Agent': 'requesty'
         });
@@ -60,7 +61,7 @@ describe('requesty build an api', function() {
         });
 
         it('parse headers', function() {
-            response.headers.server.should.be.equal('gunicorn/18.0');
+            response.headers.server.substring(0,8).should.be.equal('gunicorn');
         });
     });
 
@@ -121,7 +122,7 @@ describe('requesty build an api', function() {
         it('return json data from redirected page', function() {
             response.data.should.be.an('object');
 
-            response.data.url.should.be.equal('http://httpbin.org/get');
+            response.data.url.should.be.equal(httpbin+'/get');
         });
     });
 

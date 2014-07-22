@@ -31,13 +31,30 @@ gulp.task('test', function() {
         });
 });
 
+
+gulp.task('test-phantom',function () {
+    return gulp.src(['./dist/test.html'])
+        .pipe($.mochaPhantomjs());
+});
+
 gulp.task('build', function() {
     
     return browserify('./lib/requesty.js')
         .bundle({
             insertGlobals: false
         })
-        .pipe(source('index.js'))
+        .pipe(source('requesty.min.js'))
+        .pipe(gulp.dest('dist'));
+});
+
+
+gulp.task('build-test', function() {
+    
+    return browserify('./test/all_test.js')
+        .bundle({
+            insertGlobals: false
+        })
+        .pipe(source('requesty-test.js'))
         .pipe(gulp.dest('dist'));
 });
 

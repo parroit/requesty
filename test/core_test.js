@@ -49,8 +49,8 @@ describe('requesty core request', function () {
         });
 
         it ('parse headers',function(){
-            //console.dir(response.headers)
-            response.headers.server.substring(0,8).should.be.equal('gunicorn');
+            
+            response.headers['content-type'].should.be.equal('application/json');
         });
     });
 
@@ -80,7 +80,7 @@ describe('requesty core request', function () {
         });
 
         it ('parse headers',function(){
-            response.headers.server.substring(0,8).should.be.equal('gunicorn');
+            response.headers['content-type'].should.be.equal('application/json');
         });
     });
 

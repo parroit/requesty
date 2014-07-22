@@ -34,7 +34,8 @@
     "gulp-mocha": "~0.4.1",
     "gulp-load-plugins": "^0.5.3",
     "vinyl-source-stream": "^0.1.1",
-    "browserify": "^4.2.1"
+    "browserify": "^4.2.1",
+    "gulp-mocha-phantomjs": "~0.3.0"
   },
   "keywords": [
     "http",

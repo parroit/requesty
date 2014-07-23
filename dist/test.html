@@ -5,38 +5,26 @@
     <meta charset="utf-8">
     <title>requesty Test Runner</title>
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
-   
+
 </head>
 
 <body>
     <div id="mocha"></div>
     <div id="content"></div>
     <script src="../node_modules/mocha/mocha.js"></script>
-    <script>
-        if (typeof(window.process) === 'undefined') {
-            window.process = {
-                stdout: {
-                    write:console.log
-                }
-            };
-        }
-        
-   </script> 
-   
-    <script>
-      mocha.setup('bdd');
-      //chai.should();
-    </script>
-    <script src="requesty.min.js"></script>
-    <script src="requesty-test.js"></script>
-    
+    <script src="../node_modules/mocha-sauce/client.js"></script>
+
 
     <script>
-    if (window.mochaPhantomJS) {
-        mochaPhantomJS.run();
-    } else {
-        mocha.run();
-    }
+    mocha.setup('bdd');
+    </script>
+    
+    <script src="requesty.min.js"></script>
+    <script src="requesty-test.js"></script>
+
+
+    <script>
+    mochaSaucePlease();
     </script>
 </body>
 

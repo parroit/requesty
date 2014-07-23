@@ -35,7 +35,7 @@
 function SauceReporter(runner) {
     function makeTestResult(test, err) {
         return {
-            name: test.fullTitle(),
+            name: test.fullTitle ? test.fullTitle() : test.toString(),
             result: (typeof err === 'undefined'),
             message: err ? err.message : 'passed',
             duration: 0

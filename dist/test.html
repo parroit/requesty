@@ -17,7 +17,7 @@
 
     <script>
         mocha.setup('bdd');
-        mocha.reporter('json');
+        mocha.reporter(SauceReporter);
     </script>
     
     <script src="requesty.min.js"></script>
@@ -26,7 +26,7 @@
 
     <script>
     
-        mocha.run();
+        mocha();
         
     </script>
 </body>

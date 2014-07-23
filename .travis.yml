@@ -1,6 +1,12 @@
 language: node_js
 node_js:
-  - '0.10'
-  - '0.11'
+- '0.10'
+- '0.11'
 before_script:
-  - npm install -g gulp
+- npm install -g gulp
+env:
+  global:
+  - secure: HIY4Jw+kEQP1cP727J1yRNEY1eSUzmeEJfFcN5PvxKM1xHchiiPkHK0RfIJSvP6i0LA2Y7nNKz6Q4yapLG+JgEyZkjRLbHBahFsnzdEZ4AKTsYMuKmsJjO/wCgcNwl3QE82HOGgfpLLiHr/hCxZX0hjo/4Mg7VJWaDTVmQ1iD6w=
+  - secure: lg8G3+BMrKJJmHf4fmd0jlFhi2VWHXTQlDvOp+FwfiqQ8sAWBfSvGzSGPJSIebL2kpCs0RUi7F8C95TvB653DxDRAvg6YplfPbTtush7GDd0QgecDXtMUD1nbI3AEBP8S77fXdozLxPQ9krCHfbmz3Pb6VAMNQne94KezU2Hmno=
+addons:
+  sauce_connect: true

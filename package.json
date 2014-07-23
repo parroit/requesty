@@ -37,7 +37,8 @@
     "browserify": "^4.2.1",
     "gulp-mocha-phantomjs": "~0.3.0",
     "gulp-uglify": "^0.3.1",
-    "gulp-streamify": "0.0.5"
+    "gulp-streamify": "0.0.5",
+    "mocha-sauce": "git://github.com/pbakaus/mocha-sauce.git"
   },
   "keywords": [
     "http",

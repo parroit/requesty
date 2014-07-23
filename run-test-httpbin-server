@@ -1,2 +1,3 @@
 export httpbin=http://localhost:8000
 gunicorn httpbin:app &
+gulp test

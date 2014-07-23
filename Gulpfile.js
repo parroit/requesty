@@ -45,7 +45,7 @@ gulp.task('build', function() {
         })
         .pipe(source('requesty.min.js'))
         .pipe($.streamify($.uglify()))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('website/dist'));
 });
 
 
@@ -57,7 +57,7 @@ gulp.task('build-test', function() {
         })
         .pipe(source('requesty-test.js'))
 
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('website/dist'));
 });
 
 gulp.task('watch', function() {

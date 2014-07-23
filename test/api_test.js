@@ -14,7 +14,7 @@ var should = chai.should();
 
 var requesty = require('../lib/requesty');
 var httpbin = process.env.httpbin || 'http://httpbin.org';
-console.log(httpbin)
+
 function newApi() {
     var req = requesty.new().usePromises();
     req

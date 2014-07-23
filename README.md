@@ -1,6 +1,8 @@
 # requesty
 [![Build Status](https://secure.travis-ci.org/parroit/requesty.png?branch=master)](http://travis-ci.org/parroit/requesty)  [![Npm module](https://badge.fury.io/js/requesty.png)](https://npmjs.org/package/requesty) [![Code Climate](https://codeclimate.com/github/parroit/requesty.png)](https://codeclimate.com/github/parroit/requesty)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/parroit.svg)](https://saucelabs.com/u/parroit)
+
 promise based http and https requests, in node and in browser
 
 ## Getting Started

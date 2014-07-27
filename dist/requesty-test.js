@@ -1,4 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (Buffer){
 /*
  * requesty
  * https://github.com/parroit/requesty
@@ -27,13 +28,12 @@ HttpError.prototype = new Error();
 
 function coreRequest(options, cb) {
     var protocol;
-
-    if (options.scheme.indexOf('http') === 0) {
-        protocol = http;
-        options.scheme = 'http';
-    } else {
+    if (options.scheme.indexOf('https') === 0) {
         protocol = https;
         options.scheme = 'https';
+    } else {
+        protocol = http;
+        options.scheme = 'http';
     }
 
     options.rejectUnauthorized = false;
@@ -48,6 +48,12 @@ function coreRequest(options, cb) {
 
         });
 
+    }
+ 
+    if (options.auth && options.auth.type === 'basic') {
+        var buff = new Buffer(options.auth.user + ':' + options.auth.password);
+        var auth = 'Basic ' + buff.toString('base64');
+        options.headers.Authorization = auth;
     }
 
     var req = protocol.request(options, function(res) {
@@ -133,7 +139,8 @@ function coreRequest(options, cb) {
 
 module.exports = coreRequest;
 
-},{"./http_status_codes":2,"./requesty":3,"./utils":4,"concat-stream":119,"http":60,"https":64,"through2":143,"url":85,"zlib":55}],2:[function(require,module,exports){
+}).call(this,require("buffer").Buffer)
+},{"./http_status_codes":2,"./requesty":3,"./utils":4,"buffer":56,"concat-stream":119,"http":60,"https":64,"through2":143,"url":85,"zlib":55}],2:[function(require,module,exports){
 module.exports = {
     '100': 'Continue',
     '101': 'Switching Protocols',
@@ -258,7 +265,7 @@ Request.prototype.auth = function(user, password) {
 
 Request.prototype.using = function(uri) {
     var uriOptions;
-    
+    //console.log(uri)
 
     if (typeof uri === 'object') {
         uriOptions = uri;
@@ -270,7 +277,7 @@ Request.prototype.using = function(uri) {
         uriOptions.scheme = part.protocol || 'http:';
         uriOptions.host = uriOptions.hostname = (part.hostname);
         uriOptions.path = part.path || '/';
-        uriOptions.port = part.port || (uriOptions.scheme === 'http:' ? 80 : 553);
+        uriOptions.port = part.port || (uriOptions.scheme === 'http:' ? 80 : 443);
         uriOptions.method = this.options.method || 'GET';
 
     }
@@ -396,6 +403,13 @@ Request.prototype.send = function(body, cb) {
         body = null;
     }
     
+    if (body && typeof body === 'object' ) {
+        if (body.original){
+            delete body.original;    
+        }
+        
+        body = JSON.stringify(body);    
+    }
     
     opt.body = body;
     opt.original = this.options;
@@ -440,7 +454,7 @@ Request.prototype.send = function(body, cb) {
             //console.log('setto auth')
             var buff = new Buffer(opt.proxy.user + ':' + opt.proxy.password);
             var auth = 'Basic ' + buff.toString('base64');
-            this.headers('authorization', auth);
+            this.headers('proxy-authorization', auth);
 
         }
 
@@ -484,6 +498,8 @@ function requesty(uri, method, headers, body) {
 requesty.new = function(options) {
     return new Request(options);
 };
+
+requesty.Request = Request;
 
 module.exports = requesty;
 
@@ -23926,14 +23942,12 @@ module.exports.obj = through2(function (options, transform, flush) {
 })
 
 },{"readable-stream/transform":141,"util":87,"xtend":142}],144:[function(require,module,exports){
-(function (process){
-if (typeof(process) === 'undefined') process = {};
+
 require('./api_test');
 require('./core_test');
 require('./requesty_test');
 require('./utils_test');
-}).call(this,require("FWaASH"))
-},{"./api_test":145,"./core_test":146,"./requesty_test":147,"./utils_test":148,"FWaASH":66}],145:[function(require,module,exports){
+},{"./api_test":145,"./core_test":146,"./requesty_test":147,"./utils_test":148}],145:[function(require,module,exports){
 (function (process){
 /*
  * requesty
@@ -24496,7 +24510,7 @@ describe('requesty', function() {
         var reqDefault = requesty.new();
 
         it('return new Request object', function() {
-            reqDefault.constructor.name.should.be.equal('Request');
+            (reqDefault instanceof requesty.Request).should.be.equal(true);
         });
 
         it('accept options object', function() {

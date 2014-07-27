@@ -1,7 +1,7 @@
 {
   "name": "requesty",
   "description": "http and https requests in node and in browser",
-  "version": "0.6.0",
+  "version": "0.10.0",
   "homepage": "https://github.com/parroit/requesty",
   "author": {
     "name": "parroit",
@@ -37,7 +37,6 @@
     "browserify": "^4.2.1",
     "gulp-uglify": "^0.3.1",
     "gulp-streamify": "0.0.5"
-    
   },
   "keywords": [
     "http",

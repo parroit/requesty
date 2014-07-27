@@ -86,7 +86,7 @@ describe('requesty', function() {
         var reqDefault = requesty.new();
 
         it('return new Request object', function() {
-            reqDefault.constructor.name.should.be.equal('Request');
+            (reqDefault instanceof requesty.Request).should.be.equal(true);
         });
 
         it('accept options object', function() {

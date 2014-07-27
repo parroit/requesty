@@ -56,27 +56,5 @@
     "concat-stream": "~1.2.1",
     "chilli": "^0.1.0",
     "micropromise": "^0.3.5"
-  },
-  "testling": {
-    "browsers": [
-      "ie8",
-      "ie9",
-      "ie10",
-      "ie11",
-      "firefox/24",
-      "firefox/25",
-      "firefox/nightly",
-      "chrome/30",
-      "chrome/31",
-      "chrome/canary",
-      "opera/16",
-      "opera/17",
-      "opera/next",
-      "safari/4",
-      "safari/5.0.5",
-      "safari/5.1"
-    ],
-    "harness": "mocha-bdd",
-    "files": "test/*.js"
   }
 }

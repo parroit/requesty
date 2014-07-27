@@ -55,7 +55,7 @@
     "concat-stream": "~1.2.1",
     "through2": "~0.5.1",
     "chilli": "^0.1.0",
-    "bluebird": "^2.2.2"
+    "micropromise": "^0.3.5"
   },
   "testling": {
     "browsers": [

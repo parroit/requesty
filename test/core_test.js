@@ -252,34 +252,33 @@ describe('requesty core request', function () {
 
     });
 
-    describe('succeed with status 2**', function () {
+    describe('succeed with status 2**', function() {
         var error;
         var response;
-        before(function (done) {
-            var req = requesty(httpbin+ '/status/201');
 
-            req.then(function (res) {
+        before(function(done) {
+            var req = requesty(httpbin + '/status/201');
+
+            req.then(function(res) {
                 response = res;
                 done();
 
-            }).then(null, function (err) {
-                    error = err;
-
-                    done();
-                });
-
+            }).catch(function(err) {
+                error = err;
+                done();
+            });
 
         });
-        it ('error is not raised',function(){
-            should.equal(error,undefined);
+
+        it('error is not raised', function() {
+            should.equal(error, undefined);
         });
-        it ('fullfill response',function(){
+
+        it('fullfill response', function() {
 
             response.headers['content-type'].should.be.equal('text/html; charset=utf-8');
         });
 
-
-
-
     });
+
 });

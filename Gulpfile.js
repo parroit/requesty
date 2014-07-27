@@ -49,6 +49,14 @@ gulp.task('build', function() {
 });
 
 
+gulp.task('build2', function() {
+    
+    return gulp.src('./lib/requesty.js')
+        .pipe($.pureCjs())
+       // .pipe($.streamify($.uglify()))
+        .pipe(gulp.dest('website/dist'));
+});
+
 gulp.task('build-test', function() {
     
     return browserify('./test/all_test.js')
